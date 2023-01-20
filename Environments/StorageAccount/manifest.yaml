@@ -1,4 +1,4 @@
-name: Sandbox
+name: Storage Account
 version: 1.0.0
 summary: Create a storage account
 description: Deploys a storage account
