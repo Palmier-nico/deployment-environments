@@ -1,0 +1,6 @@
+name: AppService
+version: 1.0.0
+summary: App Service
+description: Deploys a App Service and App Service Plan
+runner: ARM
+templatePath: azuredeploy.json
