@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.12.40.16777",
+      "templateHash": "10866769135303327002"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location to deploy the environment resources"
+      }
+    },
+    "name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "resourceName": {
+      "type": "string",
+      "defaultValue": "[if(not(empty(parameters('name'))), replace(parameters('name'), ' ', '-'), format('a{0}', uniqueString(resourceGroup().id)))]"
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Tags to apply to environment resources"
+      }
+    }
+  },
+  "variables": {
+    "storageAcctName": "[toLower(replace(parameters('resourceName'), '-', ''))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2022-05-01",
+      "name": "[variables('storageAcctName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "tags": "[parameters('tags')]"
+    }
+  ]
+}
