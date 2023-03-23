@@ -1,5 +1,9 @@
 @description('The name of the Managed Cluster resource.')
-param clusterName string = 'aks101cluster'
+param name string = ''
+
+param resourceName string = !empty(name) ? replace(name, ' ', '-') : 'a${uniqueString(resourceGroup().id)}'
+
+var clusterName = toLower(replace(resourceName, '-', ''))
 
 @description('The location of the Managed Cluster resource.')
 param location string = resourceGroup().location

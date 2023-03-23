@@ -5,16 +5,20 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "7158360039441545899"
+      "templateHash": "1766782653025918260"
     }
   },
   "parameters": {
-    "clusterName": {
+    "name": {
       "type": "string",
-      "defaultValue": "aks101cluster",
+      "defaultValue": "",
       "metadata": {
         "description": "The name of the Managed Cluster resource."
       }
+    },
+    "resourceName": {
+      "type": "string",
+      "defaultValue": "[if(not(empty(parameters('name'))), replace(parameters('name'), ' ', '-'), format('a{0}', uniqueString(resourceGroup().id)))]"
     },
     "location": {
       "type": "string",
@@ -49,11 +53,14 @@
       }
     }
   },
+  "variables": {
+    "clusterName": "[toLower(replace(parameters('resourceName'), '-', ''))]"
+  },
   "resources": [
     {
       "type": "Microsoft.ContainerService/managedClusters",
       "apiVersion": "2022-05-02-preview",
-      "name": "[parameters('clusterName')]",
+      "name": "[variables('clusterName')]",
       "location": "[parameters('location')]",
       "identity": {
         "type": "SystemAssigned"
@@ -75,7 +82,7 @@
   "outputs": {
     "controlPlaneFQDN": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName')), '2022-05-02-preview').fqdn]"
+      "value": "[reference(resourceId('Microsoft.ContainerService/managedClusters', variables('clusterName')), '2022-05-02-preview').fqdn]"
     }
   }
 }
