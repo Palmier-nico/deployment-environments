@@ -1,0 +1,6 @@
+name: AksTest
+version: 1.0.0
+summary: AKS Test Public Cluster
+description: Deploys an Azure Kubernetes service
+runner: ARM
+templatePath: azuredeploy.json

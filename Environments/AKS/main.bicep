@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('The name of the Managed Cluster resource.')
 param name string = ''
 
@@ -28,6 +30,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
     type: 'SystemAssigned'
   }
   properties: {
+    dnsPrefix: clusterName
     agentPoolProfiles: [
       {
         name: 'agentpool'
@@ -41,4 +44,3 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
   }
 }
 
-output controlPlaneFQDN string = aks.properties.fqdn
