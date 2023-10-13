@@ -4,3 +4,16 @@ summary: Azure Function App Environment
 description: Deploys an Azure Function App, Storage Account, and Application Insights
 runner: ARM
 templatePath: azuredeploy.json
+parameters:
+- id: "location"
+  name: "location"
+  description: "Location to deploy the environment resources"
+  default: "[resourceGroup().location]"
+  type: "string"
+  required: false
+- id: "name"
+  name: "name"
+  description: "Name of the Web App "
+  default: ""
+  type: "string"
+  required: false
